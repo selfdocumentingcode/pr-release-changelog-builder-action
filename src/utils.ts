@@ -215,7 +215,9 @@ export function mergeConfiguration(jc?: Configuration, fc?: Configuration, mode?
     tag_resolver: jc?.tag_resolver || fc?.tag_resolver || def.tag_resolver,
     base_branches: jc?.base_branches || fc?.base_branches || def.base_branches,
     custom_placeholders: jc?.custom_placeholders || fc?.custom_placeholders || def.custom_placeholders,
-    trim_values: jc?.trim_values || fc?.trim_values || def.trim_values
+    trim_values: jc?.trim_values || fc?.trim_values || def.trim_values,
+    categorized_include_empty_content:
+      jc?.categorized_include_empty_content || fc?.categorized_include_empty_content || def.categorized_include_empty_content
   }
 }
 

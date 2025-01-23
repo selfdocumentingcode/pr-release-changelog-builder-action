@@ -158,7 +158,7 @@ export function buildChangelog(diffInfo: DiffInfo, origPrs: PullRequestInfo[], o
   core.info(`ℹ️ Ordered all pull requests into ${categories.length} categories`)
 
   // serialize and provide the categorized content as json
-  const transformedCategorized = buildCategorizedOutput(flatCategories)
+  const transformedCategorized = buildCategorizedOutput(flatCategories, config)
   core.setOutput('categorized', JSON.stringify(transformedCategorized))
 
   // construct final changelog
@@ -422,10 +422,20 @@ function buildReleaseNotesTemplateContext(
   return releaseNotesTemplateContext
 }
 
-function buildCategorizedOutput(flatCategories: Category[]): Record<string, string[]> {
+function buildCategorizedOutput(flatCategories: Category[], config: Configuration): Record<string, string[]> {
   const transformedCategorized = {}
 
   for (const category of flatCategories) {
+    let entries = category.entries
+
+    if (entries?.length === 0) {
+      const includeEmptyContent = config.categorized_include_empty_content && category.empty_content?.trim() !== ''
+
+      if (includeEmptyContent) {
+        entries = [category.empty_content ?? '']
+      }
+    }
+
     Object.assign(transformedCategorized, {[category.key || category.title]: category.entries})
   }
 

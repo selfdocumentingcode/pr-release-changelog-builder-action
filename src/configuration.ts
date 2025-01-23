@@ -12,6 +12,7 @@ export interface Configuration extends PullConfiguration {
   transformers: Regex[]
   custom_placeholders?: Placeholder[]
   trim_values: boolean
+  categorized_include_empty_content: boolean
 }
 
 export interface Category {
@@ -101,7 +102,8 @@ export const DefaultConfiguration: Configuration = {
   },
   base_branches: [], // target branches for the merged PR ignoring PRs with different target branch, by default it will get all PRs
   custom_placeholders: [],
-  trim_values: false // defines if values are being trimmed prior to inserting
+  trim_values: false, // defines if values are being trimmed prior to inserting
+  categorized_include_empty_content: false // if true, include "empty_content" string in the category entries array
 }
 
 export const DefaultCommitConfiguration: Configuration = {
